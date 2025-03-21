@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
     <title>Hospital management</title>
 </head>
 <body>
@@ -14,7 +15,9 @@
                 <div>
                     <label>Keyword :</label>
                     <input type="text" name="keyword" th:value="${keyword}">
-                    <button type="submit" class="btn btn-info">Chercher</button>
+                    <button type="submit" class="btn btn-info">
+                        <i class="bi bi-search"></i>
+                    </button>
                 </div>
             </form>
             <table class="table">
@@ -30,6 +33,13 @@
                     <td th:text="${p.malade}"></td>
                     <td th:text="${p.dateNaissance}"></td>
                     <td th:text="${p.score}"></td>
+                    <td>
+                        <a onclick="return confirm('Etes vous sure ?')"
+                           th:href="@{delete(id=${p.id}, keyword =${keyword}, page=${currentPage})}"
+                           class="btn btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

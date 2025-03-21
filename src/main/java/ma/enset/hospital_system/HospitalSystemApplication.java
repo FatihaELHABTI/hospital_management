@@ -40,9 +40,9 @@ public class HospitalSystemApplication  implements CommandLineRunner {
                 .score(26)
                 .build();
 
-        patientRepository.save(new Patient(null,"Yassine",new Date(),false,123));
-        patientRepository.save(new Patient(null,"Najat",new Date(),false,89));
-        patientRepository.save(new Patient(null,"Siham",new Date(),false,34));
+//        patientRepository.save(new Patient(null,"Yassine",new Date(),false,123));
+//        patientRepository.save(new Patient(null,"Najat",new Date(),false,89));
+//        patientRepository.save(new Patient(null,"Siham",new Date(),false,34));
 
     }
 }
