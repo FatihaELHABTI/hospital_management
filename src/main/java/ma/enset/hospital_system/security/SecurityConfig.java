@@ -27,11 +27,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(Customizer.withDefaults())
+                .formLogin(ar -> ar.loginPage("/login").defaultSuccessUrl("/").permitAll())
                 .authorizeHttpRequests(ar->ar.requestMatchers("/deletePatient/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .exceptionHandling(ar -> ar.accessDeniedPage("/notAuthorized"))
                 .build();
     }
 }
