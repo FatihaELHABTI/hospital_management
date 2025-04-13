@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PatientController {
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "size", defaultValue = "4") int size,
@@ -31,31 +31,31 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/deletePatient")
     public String delete(Long id, String keyword, int page) {
         patientRepository.deleteById(id);
-        return "redirect:/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
     }
 
     // Add this new method to handle the /formPatients route
-    @GetMapping("/formPatients")
+    @GetMapping("/admin/formPatients")
     public String formPatients(Model model) {
         // Create a new Patient object to bind to the form
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
-    @PostMapping(path="/save")
+    @PostMapping(path="/admin/save")
     public String save(Model model , @Valid Patient patient, BindingResult bindingResult,
                        @RequestParam(defaultValue = "") String keyword,
                        @RequestParam(defaultValue = "0") int page) {
         if(bindingResult.hasErrors())
             return "formPatients";
         patientRepository.save(patient);
-        return "redirect:/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
     }
 
-    @GetMapping("/editPatient")
+    @GetMapping("/admin/editPatient")
     public String editPatient(Model model, Long id, String keyword, int page) {
         Patient patient = patientRepository.findById(id).orElse(null);
         if(patient == null)
@@ -65,5 +65,10 @@ public class PatientController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("page", page);
         return "editPatient";
+    }
+
+    @GetMapping("/")
+    public String home(){
+        return "redirect:/user/index";
     }
 }
