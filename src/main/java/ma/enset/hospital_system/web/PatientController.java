@@ -6,6 +6,7 @@ import ma.enset.hospital_system.entities.Patient;
 import ma.enset.hospital_system.repository.PatientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class PatientController {
 
     // Add this new method to handle the /formPatients route
     @GetMapping("/admin/formPatients")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String formPatients(Model model) {
         // Create a new Patient object to bind to the form
         model.addAttribute("patient", new Patient());
