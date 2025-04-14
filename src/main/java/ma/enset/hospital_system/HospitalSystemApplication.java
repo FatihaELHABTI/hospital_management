@@ -2,6 +2,7 @@ package ma.enset.hospital_system;
 
 import ma.enset.hospital_system.entities.Patient;
 import ma.enset.hospital_system.repository.PatientRepository;
+import ma.enset.hospital_system.security.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -56,35 +57,51 @@ public class HospitalSystemApplication  implements CommandLineRunner {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
-        PasswordEncoder passwordEncoder = passwordEncoder();
-        return args -> {
-            UserDetails ud1 = jdbcUserDetailsManager.loadUserByUsername("user11");
-            UserDetails ud2 = jdbcUserDetailsManager.loadUserByUsername("user22");
-            UserDetails ud3 = jdbcUserDetailsManager.loadUserByUsername("admin2");
-            if(ud1 == null)
-                jdbcUserDetailsManager.createUser(
-                        User.withUsername("user11").password(passwordEncoder.encode("1234")).roles("USER").build()
-                );
-            if(ud2 == null)
-                jdbcUserDetailsManager.createUser(
-                        User.withUsername("user22").password(passwordEncoder.encode("1234")).roles("USER").build()
-                );
-            if(ud3 == null)
-                jdbcUserDetailsManager.createUser(
-                        User.withUsername("admin2").password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build()
-                );
+    //@Bean
+//    CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
+//        PasswordEncoder passwordEncoder = passwordEncoder();
+//        return args -> {
+//            UserDetails ud1 = jdbcUserDetailsManager.loadUserByUsername("user11");
+//            UserDetails ud2 = jdbcUserDetailsManager.loadUserByUsername("user22");
+//            UserDetails ud3 = jdbcUserDetailsManager.loadUserByUsername("admin2");
+//            if(ud1 == null)
+//                jdbcUserDetailsManager.createUser(
+//                        User.withUsername("user11").password(passwordEncoder.encode("1234")).roles("USER").build()
+//                );
+//            if(ud2 == null)
+//                jdbcUserDetailsManager.createUser(
+//                        User.withUsername("user22").password(passwordEncoder.encode("1234")).roles("USER").build()
+//                );
+//            if(ud3 == null)
+//                jdbcUserDetailsManager.createUser(
+//                        User.withUsername("admin2").password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build()
+//                );
+//
+////            jdbcUserDetailsManager.createUser(
+////                    User.withUsername("user11").password(passwordEncoder.encode("1234")).roles("USER").build()
+////            );
+////            jdbcUserDetailsManager.createUser(
+////                    User.withUsername("user22").password(passwordEncoder.encode("1234")).roles("USER").build()
+////            );
+////            jdbcUserDetailsManager.createUser(
+////                    User.withUsername("admin2").password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build()
+////            );
+//        };
+//    }
 
-//            jdbcUserDetailsManager.createUser(
-//                    User.withUsername("user11").password(passwordEncoder.encode("1234")).roles("USER").build()
-//            );
-//            jdbcUserDetailsManager.createUser(
-//                    User.withUsername("user22").password(passwordEncoder.encode("1234")).roles("USER").build()
-//            );
-//            jdbcUserDetailsManager.createUser(
-//                    User.withUsername("admin2").password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build()
-//            );
+    @Bean
+    CommandLineRunner commandLineRunnerUserDetails(AccountService accountService) {
+        return args -> {
+            accountService.addNewRole("USER");
+            accountService.addNewRole("ADMIN");
+            accountService.addNewUser("user1", "1234", "1234", "user1@gmail.com");
+            accountService.addNewUser("user2", "1234", "1234", "user2@gmail.com");
+            accountService.addNewUser("admin", "1234", "1234", "admin@gmail.com");
+
+            accountService.addRoleToUser("user1", "USER");
+            accountService.addRoleToUser("user2", "USER");
+            accountService.addRoleToUser("admin", "USER");
+            accountService.addRoleToUser("admin", "ADMIN");
         };
     }
 }

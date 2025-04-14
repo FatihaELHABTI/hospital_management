@@ -1,5 +1,7 @@
 package ma.enset.hospital_system.security;
 
+import lombok.AllArgsConstructor;
+import ma.enset.hospital_system.security.services.UserDetailsServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +22,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
 
     private PasswordEncoder passwordEncoder;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Bean
+//    @Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -46,17 +50,14 @@ public class SecurityConfig {
                 .rememberMe(rm -> rm.key("remember-me-key") // Enables remember-me feature
                         .tokenValiditySeconds(40000) // Token valid for 1 day (optional)
                 )
-//                .authorizeHttpRequests(ar->ar.requestMatchers("/deletePatient/**").hasRole("ADMIN"))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
-                .authorizeHttpRequests(ar -> ar
-                        .requestMatchers("/webjars/**", "/css/**", "/js/**", "/h2-console/**").permitAll())
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 .exceptionHandling(ar -> ar.accessDeniedPage("/notAuthorized"))
+                .userDetailsService(userDetailsServiceImpl)
+                .authorizeHttpRequests(ar -> ar
+                                .requestMatchers("/webjars/**", "/css/**", "/js/**", "/h2-console/**").permitAll()
+//                        .requestMatchers("/user/**").hasRole("USER")
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                )
                 .build();
     }
-
-
-
-
 }
