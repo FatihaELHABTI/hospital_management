@@ -1,6 +1,16 @@
 Système de Gestion Hospitalière
 Bienvenue dans le projet Système de Gestion Hospitalière, une application web développée pour gérer les informations des patients et les utilisateurs avec un système d'authentification sécurisé. Ce projet utilise une architecture basée sur Spring Boot et fournit une interface utilisateur intuitive pour les administrateurs et les utilisateurs.
+Table des Matières
 
+Description du Projet
+Fonctionnalités
+Technologies Utilisées
+Concepts Clés
+Installation et Configuration
+Exemples de Code
+Structure du Projet
+Contribuer
+Licence
 
 Description du Projet
 Le Système de Gestion Hospitalière est une application web conçue pour :
@@ -11,7 +21,6 @@ Permettre aux administrateurs de créer, modifier et supprimer des patients.
 Offrir une interface utilisateur responsive utilisant Bootstrap et Thymeleaf.
 
 L'application utilise une base de données relationnelle (MySQL ou H2 pour le développement) et est construite avec des technologies modernes de Spring.
-
 Fonctionnalités
 
 Gestion des Patients :
@@ -37,7 +46,6 @@ Support pour MySQL en production et H2 pour les tests.
 
 
 
-
 Technologies Utilisées
 
 Java 17 : Langage de programmation principal.
@@ -50,7 +58,6 @@ Bootstrap 5.3.3 : Framework CSS pour une interface responsive.
 MySQL : Base de données relationnelle (configurable avec H2 pour les tests).
 Maven : Gestion des dépendances et construction du projet.
 Lombok : Pour réduire le code boilerplate (getters, setters, constructeurs).
-
 
 Concepts Clés
 JPA (Java Persistence API)
@@ -71,7 +78,6 @@ Exemple : La classe SecurityConfig configure les règles d'accès, comme restrei
 Thymeleaf
 Thymeleaf est un moteur de template côté serveur qui permet de générer des pages HTML dynamiques. Il s'intègre bien avec Spring Boot et prend en charge les expressions pour afficher des données dynamiques.
 Exemple : La page patients.html utilise des expressions Thymeleaf comme th:each pour afficher une liste de patients.
-
 Installation et Configuration
 Prérequis
 
@@ -108,7 +114,6 @@ Ouvrez votre navigateur et allez à http://localhost:8084/.
 Connectez-vous avec les identifiants par défaut :
 Utilisateur : user1, Mot de passe : 1234 (rôle USER).
 Admin : admin, Mot de passe : 1234 (rôles USER et ADMIN).
-
 
 
 
@@ -182,7 +187,6 @@ Page Thymeleaf pour la Liste des Patients
 </table>
 
 Explication : Cette page affiche une table des patients avec des boutons de suppression visibles uniquement pour les administrateurs.
-
 Structure du Projet
 hospital_system/
 ├── src/
@@ -202,3 +206,14 @@ hospital_system/
 ├── pom.xml                             # Fichier de configuration Maven
 └── README.md                           # Ce fichier
 
+Contribuer
+Les contributions sont les bienvenues ! Pour contribuer :
+
+Forkez le dépôt.
+Créez une branche pour votre fonctionnalité (git checkout -b feature/nouvelle-fonctionnalite).
+Commitez vos changements (git commit -m 'Ajout de nouvelle fonctionnalité').
+Poussez votre branche (git push origin feature/nouvelle-fonctionnalite).
+Ouvrez une Pull Request.
+
+Licence
+Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus de détails.
